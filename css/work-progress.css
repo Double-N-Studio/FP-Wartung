@@ -1,0 +1,119 @@
+.plan-settings {
+  margin: 16px 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 15px;
+}
+.plan-settings > summary {
+  font-weight: 650;
+  cursor: pointer;
+  list-style-position: inside;
+}
+.plan-settings:not([open]) {
+  background: #f7f9f5;
+}
+.winter-top-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 9px;
+}
+.legend b.worked {
+  background: #cf9b45;
+}
+.sequential .bar.worked {
+  top: 34px;
+  background: #d6a14b;
+}
+.sequential .bar.verified {
+  top: 34px;
+  background: #32735e;
+  z-index: 2;
+}
+.gstatus > span {
+  display: block;
+}
+.activity-text {
+  font-size: 10px;
+  color: var(--muted);
+}
+.sequential .ghead,
+.sequential .grow {
+  grid-template-columns: 265px 1fr 150px;
+}
+.working-marker {
+  position: absolute;
+  top: 48px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c38c2d;
+  z-index: 2;
+}
+.work-progress-track {
+  height: 9px;
+  position: relative;
+  background: #e5ece6;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 14px 0 22px;
+}
+.work-progress-track > span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.worked-fill {
+  background: #d6a14b;
+}
+.checked-fill {
+  background: #32735e;
+}
+.create-work-from-report {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f5f8f2;
+  padding: 14px;
+  margin: 16px 0;
+}
+.create-work-from-report > label {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-weight: 600;
+}
+.create-work-from-report input[type="checkbox"] {
+  width: 21px;
+  height: 21px;
+  accent-color: var(--green);
+}
+#reportWorkFields {
+  margin-top: 14px;
+}
+#reportWorkFields label {
+  display: grid;
+  gap: 5px;
+}
+.work-title-input {
+  display: block;
+  width: 100%;
+  margin: 7px 0 16px;
+}
+#workDialog {
+  width: min(740px, 96vw);
+}
+[hidden] {
+  display: none !important;
+}
+.timeline.sequential {
+  min-width: 1000px;
+}
+@media (max-width: 600px) {
+  .winter-top-actions {
+    align-items: flex-start;
+  }
+  .create-work-from-report {
+    padding: 10px;
+  }
+}

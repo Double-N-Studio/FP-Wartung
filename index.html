@@ -1,1 +1,74 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123c35"><title>ACL Technik | Flotte im Blick</title><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css"></head><body><header><a class="brand" href="#"><span class="brandicon">ACL</span><span>TECHNIK<small>AERO-CLUB LANGENSELBOLD</small></span></a><nav><button id="dailyTab" class="active" onclick="mode='daily';render()">Flugbetrieb</button><button id="winterTab" onclick="mode='winter';render()">Winterwartung</button></nav><span class="device">Vereinstablet · Demo</span></header><div class="demobar">Klickbarer Prototyp · nur lokale Testdaten · keine Vereinsflieger-Anbindung oder betriebliche Freigabe</div><main id="app"></main><footer><span>ACL Technik · Gemeinsam gut vorbereitet.</span><button onclick="exportData()">Testdaten exportieren</button><button onclick="resetData()">Demo zurücksetzen</button><a href="https://ac-langenselbold.de/flugzeuge/" target="_blank" rel="noopener">Flottenquelle ↗</a></footer><dialog id="detail"><div id="dialogContent"></div></dialog><dialog id="reportDialog"><div id="reportContent"></div></dialog><dialog id="workDialog"><div id="workContent"></div></dialog><dialog id="photoView"><div id="photoViewContent"></div></dialog><div id="toast" role="status"></div><script src="data.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#123c35" />
+    <title>ACL Technik | Flotte im Blick</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+
+    <!-- Reihenfolge ist relevant: spätere Dateien überschreiben frühere Regeln. -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/issues.css" />
+    <link rel="stylesheet" href="css/fleet-overview.css" />
+    <link rel="stylesheet" href="css/status-and-gantt.css" />
+    <link rel="stylesheet" href="css/daily-check.css" />
+    <link rel="stylesheet" href="css/planning-period.css" />
+    <link rel="stylesheet" href="css/work-progress.css" />
+    <link rel="stylesheet" href="css/annual-work.css" />
+    <link rel="stylesheet" href="css/weekend.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#">
+        <span class="brandicon">ACL</span>
+        <span>TECHNIK<small>AERO-CLUB LANGENSELBOLD</small></span>
+      </a>
+      <nav>
+        <button id="dailyTab" class="active" onclick="mode='daily';render()">Flugbetrieb</button>
+        <button id="winterTab" onclick="mode='winter';render()">Winterwartung</button>
+      </nav>
+      <span class="device">Vereinstablet · Demo</span>
+    </header>
+
+    <div class="demobar">
+      Klickbarer Prototyp · nur lokale Testdaten · keine Vereinsflieger-Anbindung oder betriebliche Freigabe
+    </div>
+
+    <main id="app"></main>
+
+    <footer>
+      <span>ACL Technik · Gemeinsam gut vorbereitet.</span>
+      <button onclick="exportData()">Testdaten exportieren</button>
+      <button onclick="resetData()">Demo zurücksetzen</button>
+      <a href="https://ac-langenselbold.de/flugzeuge/" target="_blank" rel="noopener">Flottenquelle ↗</a>
+    </footer>
+
+    <dialog id="detail"><div id="dialogContent"></div></dialog>
+    <dialog id="reportDialog"><div id="reportContent"></div></dialog>
+    <dialog id="workDialog"><div id="workContent"></div></dialog>
+    <dialog id="photoView"><div id="photoViewContent"></div></dialog>
+    <div id="toast" role="status"></div>
+
+    <!-- Klassische Skripte mit gemeinsamem globalen Gültigkeitsbereich; main.js zuletzt. -->
+    <script src="js/data.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/ui-state.js"></script>
+    <script src="js/core/dialog.js"></script>
+    <script src="js/daily/status.js"></script>
+    <script src="js/daily/fleet-overview.js"></script>
+    <script src="js/daily/daily-check.js"></script>
+    <script src="js/daily/issues.js"></script>
+    <script src="js/daily/signature.js"></script>
+    <script src="js/work/work-items.js"></script>
+    <script src="js/work/task-dialog.js"></script>
+    <script src="js/work/work-form.js"></script>
+    <script src="js/winter/planning.js"></script>
+    <script src="js/winter/reorder.js"></script>
+    <script src="js/winter/weekend.js"></script>
+    <script src="js/winter/winter-view.js"></script>
+    <script src="js/annual/annual-work.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
