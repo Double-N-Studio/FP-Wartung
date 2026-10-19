@@ -1,0 +1,78 @@
+.weekend-panel {
+  border-top: 4px solid #32735e;
+}
+.weekend-nav {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.weekend-nav button {
+  font-size: 12px;
+}
+.weekend-aircraft {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  margin-top: 20px;
+}
+.weekend-aircraft > .top {
+  margin-bottom: 13px;
+}
+.weekend-aircraft .badge {
+  margin-top: 5px;
+}
+.weekend-task {
+  display: grid;
+  grid-template-columns: 1fr 155px 100px;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid #e8eee7;
+}
+.weekend-task strong {
+  font-size: 14px;
+}
+.weekend-task button {
+  font-size: 12px;
+}
+.weekend-more {
+  padding: 12px 0;
+}
+.weekend-more > summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+}
+.work-date-planning {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.work-date-planning label {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+}
+.work-date-planning button {
+  font-size: 12px;
+}
+@media (max-width: 600px) {
+  .weekend-nav {
+    flex-wrap: wrap;
+  }
+  .weekend-panel > .top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .weekend-task {
+    grid-template-columns: 1fr auto;
+    gap: 7px;
+  }
+  .weekend-task > div {
+    grid-column: 1/-1;
+  }
+  .work-date-planning label {
+    width: 100%;
+  }
+}

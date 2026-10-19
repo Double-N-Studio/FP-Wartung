@@ -1,0 +1,102 @@
+.fleet-card .aircraft-open {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  overflow: hidden;
+}
+.fleet-card .aircraft-open:hover {
+  background: transparent;
+}
+.fleet-card .quick-check {
+  flex-shrink: 0;
+  margin: 0 7px 7px;
+  padding: 5px 6px;
+  min-height: 37px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.fleet-card .quick-check:disabled {
+  font-weight: 400;
+  background: transparent;
+  min-height: 26px;
+  border: 0;
+}
+.header-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.report-always {
+  background: #fff3d8;
+  border-color: #e4c681;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.check-alerts {
+  border: 1px solid #d9bd7c;
+  border-radius: 9px;
+  background: #fffbef;
+  margin: 14px 0;
+  padding: 12px 16px;
+}
+.check-alerts > summary {
+  font-weight: 650;
+  cursor: pointer;
+}
+.check-alert {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-left: 3px solid #b88a26;
+  font-size: 13px;
+}
+.check-alert.blocking {
+  border-color: #b4332c;
+  background: #fff0ec;
+  color: #8e3026;
+}
+.check-alert p {
+  margin: 3px 0;
+}
+.check-alert.advisory {
+  color: #705216;
+}
+.dfoot {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 3;
+}
+#reportDialog {
+  width: min(760px, 96vw);
+}
+@media (max-width: 600px) {
+  .report-always {
+    font-size: 12px;
+    padding: 7px 9px;
+  }
+  .dhead h2 {
+    font-size: 19px;
+  }
+  .header-actions {
+    gap: 5px;
+  }
+  .dhead {
+    gap: 8px;
+  }
+  .fleet-card .quick-check {
+    font-size: 10px;
+    margin: 0 4px 4px;
+    min-height: 34px;
+    padding: 4px 3px;
+  }
+  .check-alerts {
+    padding: 10px;
+  }
+}

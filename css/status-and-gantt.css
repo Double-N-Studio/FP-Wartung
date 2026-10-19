@@ -1,0 +1,179 @@
+.aircraft-status {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 17px 20px;
+  border-radius: 10px;
+}
+.aircraft-status strong {
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+.aircraft-status span {
+  font-size: 13px;
+}
+.aircraft-status.gray {
+  background: #edf0ee;
+  color: #52635a;
+}
+.issue-summary {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+.pilot-badge {
+  background: #fff0cc;
+  color: #845d10;
+}
+.issue-advisory {
+  border-color: #bf8e2b;
+  background: #fffbef;
+}
+.issue-cosmetic {
+  border-color: #96a59c;
+  background: #f4f6f3;
+}
+.additional-issues {
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 22px 0;
+}
+.additional-issues > summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.classification {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.classification > summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.classification label {
+  display: block;
+  margin: 10px 0;
+}
+.classification select {
+  display: block;
+  margin-top: 5px;
+  width: 100%;
+}
+.plan-controls {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  flex-wrap: wrap;
+  padding: 15px 0;
+}
+.plan-controls label {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.plan-controls input,
+.plan-controls select {
+  min-height: 45px;
+}
+.sequential {
+  min-width: 850px;
+}
+.sequential .ghead,
+.sequential .grow {
+  grid-template-columns: 265px 1fr 100px;
+}
+.calendar-months {
+  position: relative;
+  height: 27px;
+}
+.calendar-months span {
+  position: absolute;
+  border-left: 1px solid var(--line);
+  padding-left: 7px;
+}
+.sequential .track {
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(20% - 1px),
+    #edf1ec calc(20% - 1px),
+    #edf1ec 20%
+  );
+}
+.plan-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.reorder-controls {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.reorder-controls > div {
+  display: flex;
+  flex-direction: column;
+}
+.reorder-controls button {
+  padding: 0;
+  width: 30px;
+  min-height: 28px;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+}
+.reorder-controls .drag-handle {
+  width: 36px;
+  min-height: 50px;
+  font-size: 28px;
+  cursor: grab;
+  touch-action: none;
+}
+.reorder-controls .dragging {
+  background: var(--mint);
+  cursor: grabbing;
+}
+.plan-row.drop-target {
+  outline: 2px solid #32735e;
+  outline-offset: -2px;
+  background: #f1f7f1;
+}
+.sequential .gname {
+  font-size: 14px;
+}
+.sequential .gname .reg {
+  font-size: 11px;
+  font-weight: 400;
+}
+.order-number {
+  color: var(--muted);
+}
+.plan-row {
+  min-height: 85px;
+}
+.sequential .bar {
+  min-height: 11px;
+}
+.plan-controls button {
+  height: 45px;
+}
+@media (max-width: 600px) {
+  .aircraft-status {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .plan-controls label {
+    width: 100%;
+  }
+  .dfoot > button {
+    flex: 1;
+    font-size: 13px;
+  }
+  .issue-summary {
+    gap: 6px;
+  }
+}
