@@ -3,10 +3,12 @@ let winchActiveDate = null;
 function winchRecord(date = today()) {
   state.winch ||= { days: {} };
   state.winch.days ||= {};
-  return state.winch.days[date] ||= { start: { checks: [], note: "", signed: null } };
+  const day = state.winch.days[date] ||= { start: { checks: [], note: "", signed: null } };
+  day.end ||= { checks: [], note: "", signed: null, launches: null };
+  return day;
 }
 function winchChecklist(phase) {
-  return phase === "start" ? WINCH_START_CHECKLIST : null;
+  return phase === "start" ? WINCH_START_CHECKLIST : phase === "end" ? WINCH_END_CHECKLIST : null;
 }
 function winchChecklistReady(phase) {
   const list = winchChecklist(phase);
@@ -22,12 +24,16 @@ function winchChecksComplete(phase, date = today()) {
     Array.from({ length: count }, (_, k) => !!r.checks[k]).every(Boolean);
 }
 function winchCanConfirm(phase, date = today()) {
-  return winchChecksComplete(phase, date) && !winchRecord(date)[phase].signed && !blockers("winch").length;
+  if (!winchChecksComplete(phase, date) || winchRecord(date)[phase].signed) return false;
+  if (phase === "start") return !blockers("winch").length;
+  // Ein sperrender Mangel darf die Dokumentation des Dienstendes nicht verhindern.
+  return phase === "end" && !winchLaunchDirty && !!winchRecord(date).start.signed && winchLaunchesValid(winchRecord(date).end.launches);
 }
 function winchStatus() {
-  return blockers("winch").length ? "red" : winchRecord().start.signed ? "green" : "gray";
+  return blockers("winch").length ? "red" : winchRecord().end.signed ? "gray" : winchRecord().start.signed ? "green" : "gray";
 }
 function winchStatusText() {
+  if (!blockers("winch").length && winchRecord().end.signed) return "DIENST BEENDET";
   return { red: "UNKLAR", green: "DIENSTBEGINN BESTÄTIGT", gray: "DIENSTBEGINN OFFEN" }[winchStatus()];
 }
 function winchDayEditable() {

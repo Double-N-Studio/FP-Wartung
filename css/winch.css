@@ -2,3 +2,8 @@
 .winch-card > img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; }
 #equipment { margin: 30px 0; }
 @media (max-width: 600px) { .winch-card { grid-template-columns: 1fr; } }
+
+.winch-history { margin: 24px 0; }
+.winch-history-scroll { overflow-x: auto; }
+.winch-history table { width: 100%; border-collapse: collapse; }
+.winch-history th, .winch-history td { padding: 10px; text-align: left; border-bottom: 1px solid #d8e2dd; }

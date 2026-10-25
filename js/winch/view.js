@@ -3,7 +3,7 @@ function renderWinchOverview() {
   const el = $("#equipment");
   if (!el) return;
   const device = DATA.winch, st = winchStatus();
-  el.innerHTML = `<div class="top"><div><div class="eyebrow">Bodenbetrieb</div><h2>ACL-Winde</h2></div></div><article class="winch-card status-${st}"><img src="${device.img}" alt="Doppeltrommelwinde des Aero-Clubs Langenselbold"><div><strong class="badge ${st === "red" ? "red" : st === "green" ? "green" : ""}">${winchStatusText()}</strong><h3>${device.name}</h3><p>Trommel 1 · Trommel 2</p><p>${issues("winch").length} offene Mängel · ${blockers("winch").length} sperrend</p><div class="issue-actions"><button onclick="openWinch()">Mängel und Tagesprotokoll</button><button class="primary" onclick="openWinch('start')">Dienstbeginn →</button></div></div></article>`;
+  el.innerHTML = `<div class="top"><div><div class="eyebrow">Bodenbetrieb</div><h2>ACL-Winde</h2></div></div><article class="winch-card status-${st}"><img src="${device.img}" alt="Doppeltrommelwinde des Aero-Clubs Langenselbold"><div><strong class="badge ${st === "red" ? "red" : st === "green" ? "green" : ""}">${winchStatusText()}</strong><h3>${device.name}</h3><p>Trommel 1 · Trommel 2</p><p>${issues("winch").length} offene Mängel · ${blockers("winch").length} sperrend</p><div class="issue-actions"><button onclick="openWinch()">Mängel und Tagesprotokoll</button><button class="primary" onclick="openWinch('start')">Dienstbeginn →</button><button onclick="openWinch('end')">Dienstende →</button></div></div></article>`;
 }
 function openWinch(phase = null) {
   if (photoBusy) { toast("Bitte warten, bis die Fotos vorbereitet sind."); return; }
@@ -22,11 +22,16 @@ function winchIssuesHTML() {
   return `<div class="aircraft-status ${winchStatus()}"><strong>${winchStatusText()}</strong></div>${entries.filter(({x}) => impact(x) !== "cosmetic").sort((a,b) => (impact(a.x) !== "blocking") - (impact(b.x) !== "blocking")).map(({x,k}) => issueCard(x,k)).join("") || '<p class="info">Keine sperrenden Mängel oder wichtigen Hinweise hinterlegt.</p>'}<details><summary>Weitere Mängel / Lackschäden (${entries.filter(({x}) => impact(x) === "cosmetic").length})</summary>${entries.filter(({x}) => impact(x) === "cosmetic").map(({x,k}) => issueCard(x,k)).join("")}</details>${closedIssuesHTML("winch")}`;
 }
 function drawWinch() {
-  const phase = step === "winch-start" ? "start" : null;
-  const body = phase ? winchChecklistHTML(phase) : winchIssuesHTML();
-  const foot = phase ? `<button onclick="step='winch-overview';drawWinch()">← Übersicht</button><span id="winchCount"></span><button class="primary" id="winchConfirm" onclick="openWinchSignature('${phase}')">Zur Bestätigung →</button>` : `<button onclick="openIssueReport()">＋ Mangel melden</button><button class="primary" onclick="step='winch-start';drawWinch()">Dienstbeginn →</button>`;
+  const phase = step === "winch-start" ? "start" : step === "winch-end" ? "end" : null;
+  if (phase === "end") winchLaunchDirty = false;
+  const body = phase === "end" ? winchEndHTML() : phase ? winchChecklistHTML(phase) : winchIssuesHTML() + winchHistoryHTML();
+  const foot = phase ? `<button onclick="step='winch-overview';drawWinch()">← Übersicht</button><span id="winchCount"></span><button class="primary" id="winchConfirm" onclick="openWinchSignature('${phase}')">Zur Bestätigung →</button>` : `<button onclick="openIssueReport()">＋ Mangel melden</button><button class="primary" onclick="step='winch-start';drawWinch()">Dienstbeginn →</button><button onclick="step='winch-end';drawWinch()">Dienstende →</button>`;
   showDialog(DATA.winch.name, "Windenbetrieb", body, foot);
   if (phase) updateWinchCount(phase);
+  if (phase === "end") $("#winchLaunchForm").onsubmit = event => {
+    event.preventDefault();
+    saveWinchLaunches($("#drum1").value, $("#drum2").value);
+  };
 }
 function winchChecklistHTML(phase) {
   const list = winchChecklist(phase), r = winchRecord(winchActiveDate)[phase];
@@ -48,7 +53,7 @@ function signWinchPhase(phase) {
   if (!winchDayEditable() || !winchCanConfirm(phase, winchActiveDate)) return false;
   const name = $("#signer").value.trim(), r = winchRecord(winchActiveDate)[phase];
   if (r.signed || !name || $("#pin").value !== "1234" || !signature) { toast("Name, Demo-PIN 1234 und Unterschrift erforderlich."); return false; }
-  r.signed = { name, timestamp: new Date().toISOString(), date: winchActiveDate, revision: winchChecklist(phase).revision, image: $("#sig").toDataURL(), checks: [...r.checks] };
+  r.signed = { name, timestamp: new Date().toISOString(), date: winchActiveDate, revision: winchChecklist(phase).revision, image: $("#sig").toDataURL(), checks: [...r.checks], ...(phase === "end" ? { launches: { ...r.launches } } : {}) };
   if (!save()) { r.signed = null; return false; }
   step = "winch-overview";
   drawWinch();
@@ -59,6 +64,6 @@ function refreshWinchIssues() {
   if (step === "winch-overview") drawWinch();
   else if ($("#winchWarnings")) {
     $("#winchWarnings").innerHTML = winchWarnings();
-    if (step === "winch-start") updateWinchCount("start");
+    if (["winch-start", "winch-end"].includes(step)) updateWinchCount(step === "winch-start" ? "start" : "end");
   }
 }
