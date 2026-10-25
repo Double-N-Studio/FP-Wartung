@@ -40,3 +40,8 @@ function toast(t) {
   $("#toast").style.display = "block";
   setTimeout(() => ($("#toast").style.display = "none"), 3500);
 }
+
+// Gemeinsames Ziel für Mängel; Geräte werden nicht in die Flugzeugflotte gemischt.
+function issueTarget(i = selected) {
+  return i === "winch" ? DATA.winch : DATA.fleet[i];
+}

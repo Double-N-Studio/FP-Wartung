@@ -20,6 +20,22 @@ Flugbetrieb, Planung der Winterwartung und Arbeiten im laufenden Jahr – für d
   ursprüngliche Angaben und Änderungen bleiben im Verlauf erhalten
 - Sperrende Mängel setzen das Flugzeug automatisch auf `UNKLAR`
 
+**ACL-Winde**
+
+- Separate Gerätekarte mit Vereinsfoto; gehört nicht zur Flugzeugflotte oder Winterplanung
+- Gemeinsame Mängelverwaltung einschließlich Fotos, Bearbeiten, Abschluss und Verlauf
+- Tagesprotokoll und Ablauf für Dienstbeginn in `js/winch/`; Prüfpunkte separat unter
+  `js/winch/checklists/start.js`
+- **Vereinsvorlage für Dienstbeginn fehlt noch:** keine erfundenen Prüfpunkte;
+  Bestätigung bleibt gesperrt, bis Revision, Originalquelle und Prüfpunkte hinterlegt sind
+- Dienstende mit separater Checkliste unter `js/winch/checklists/end.js` (Originalvorlage fehlt ebenfalls)
+- Tagesstarts pro Trommel/Seil 1 und 2: ganze, nicht negative Zahlen; 0 ist gültig,
+  leere Eingaben nicht. Speichern ersetzt Tageswerte. Bestätigte Werte sind unveränderlich.
+- Protokollübersicht und Summen aus bestätigten Dienstenden; Entwürfe werden nicht mitgezählt
+- Dienstende benötigt bestätigten Dienstbeginn, gespeicherte Startzahlen und vollständige Checkliste.
+  Sperrende Mängel bleiben offen und verhindern nicht die Dokumentation des Dienstendes.
+- Fotoquelle: <https://ac-langenselbold.de/flugzeuge/> (Winde, Vereinsfoto)
+
 **Winterwartung**
 
 - Gantt-Plan für sieben Segelflugzeuge (ohne Dynamic WT9), Reihenfolge per Drag-and-drop oder ↑/↓
@@ -113,6 +129,31 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
   gespeichert – das LocalStorage-Limit (≈ 5 MB) ist schnell erreicht.
 - **CSS-Reihenfolge**: Die Stylesheets überschreiben teilweise frühere Regeln; die Reihenfolge der
   `<link>`-Tags nicht ändern, ohne das Ergebnis zu prüfen.
+
+### Winden-Module
+
+| Datei | Verantwortung |
+| --- | --- |
+| `js/winch/data.js` | Stammdaten und lokale Bildquelle |
+| `js/winch/checklists/start.js` | Original-Prüfpunkte Dienstbeginn, derzeit Vorlage ausstehend |
+| `js/winch/checklists/end.js` | Original-Prüfpunkte Dienstende, derzeit Vorlage ausstehend |
+| `js/winch/model.js` | Tagesprotokolle, Status und Abschlussbedingungen |
+| `js/winch/launches.js` | Trommelzahlen, Validierung und Protokollübersicht |
+| `js/winch/view.js` | Gerätekarte, Checklisten und Bestätigung |
+| `js/daily/issues.js` | Gemeinsames Mängelformular und Fotos |
+| `js/daily/issue-lifecycle.js` | Gemeinsame Bearbeitung, Abschluss und Verlauf |
+
+### Windenbetrieb erweitern
+
+Die Winde liegt unter `DATA.winch`, ihr Mängelschlüssel ist `winch`.
+Tagesprotokolle werden unter `state.winch.days[Datum]` gespeichert. So bleiben die acht
+Flugzeuge, ihre bisherigen Indizes, Winterreihenfolge und Jahreswachspflichten unverändert.
+Winden-Prüfpunkte werden ausschließlich aus der konkreten Vereinsvorlage in das getrennte
+Checklistenmodul übernommen. Ohne Vorlagen können weder Dienstbeginn noch Dienstende bestätigt werden.
+Startzahlen können unabhängig davon als Entwurf gespeichert werden.
+`js/winch/launches.js` kapselt Validierung, Tageswerte und Summen. Änderungen an
+Startzahlen müssen gespeichert werden, bevor das Dienstende bestätigt werden kann.
+Ein neuer Tag erhält ein eigenes Protokoll; alte Mängel bleiben offen, bis sie beendet werden.
 
 ### Daten anpassen
 

@@ -1,7 +1,8 @@
 // Bearbeiten, Abschließen und Wiederöffnen; Mängel bleiben nachvollziehbar erhalten.
 let issueEdit = null;
 function refreshIssueViews() {
-  if ($("#detail").open && step === "issues") drawDaily();
+  if (selected === "winch") refreshWinchIssues();
+  else if ($("#detail").open && step === "issues") drawDaily();
   else if ($("#checkWarnings")) $("#checkWarnings").innerHTML = checkWarnings();
   render();
 }
