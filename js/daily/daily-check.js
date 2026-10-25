@@ -14,6 +14,7 @@ function openDaily(i) {
   drawDaily();
 }
 function startDaily(i) {
+  if (record(i).signed) return openDailyProtocol(i);
   openDaily(i);
   if (dailyChecklist(i) && !record(i).signed) {
     step = "checks";
@@ -62,6 +63,7 @@ function drawDaily() {
     body = `<div class="eyebrow">03 / Persönlicher Abschluss</div><h2>Kontrolle bestätigen</h2><div id="checkWarnings">${checkWarnings()}</div><p>${completedDailyCount(i)} von ${dailyCheckCount(i)} Punkten erledigt. ${blockers(i).length ? "Sperrende Mängel halten den Flugzeugstatus weiterhin rot." : ""}</p><div class="info">Demo: Die PIN 1234 prüft nur den Ablauf. Es findet noch keine echte Identitätsprüfung statt.</div><div class="fields"><label>Fluglehrer / bestätigende Person<input id="signer" autocomplete="off" placeholder="Vor- und Nachname"></label><label>Demo-PIN<input id="pin" type="password" inputmode="numeric" placeholder="1234" autocomplete="off"></label></div><label>Unterschrift mit Finger oder Stift<canvas id="sig" class="signature" width="900" height="240"></canvas></label><button onclick="clearSig()">Unterschrift löschen</button>`;
     foot = `<button onclick="step='checks';drawDaily()">← Zurück</button><button class="primary" onclick="signRecord()">Testprotokoll unterschreiben</button>`;
   }
+  if (step === "issues") body += dailyProtocolsHTML(i);
   showDialog(`${f.name} · ${f.reg}`, "Flugbetrieb", body, foot);
   if (step === "checks") updateCount();
   if (step === "sign") setupSig();

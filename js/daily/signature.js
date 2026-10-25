@@ -48,6 +48,7 @@ function signRecord() {
     date: today(),
     image: $("#sig").toDataURL(),
   };
+  r.checklistSnapshot = JSON.parse(JSON.stringify(dailyChecklist(selected).groups));
   r.signed = signed;
   state.archive.push({
     aircraft: DATA.fleet[selected].name,
