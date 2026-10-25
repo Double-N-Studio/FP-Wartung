@@ -49,20 +49,7 @@ function draftPhotosHTML() {
 }
 function issueCard(x, k) {
   const level = impact(x);
-  return `<div class="issue issue-${level}"><strong>${impactLabels[level]} · ${esc(x.date)}</strong><div class="issue-tags"><span class="badge">${esc(x.category || "Nicht klassifiziert")}</span><span class="badge">${esc(x.priority || "Bewertung erforderlich")}</span></div>${x.location ? `<div class="small"><b>Position:</b> ${esc(x.location)}</div>` : ""}<p>${esc(x.text)}</p><div class="issue-photos">${(x.photos || []).map((p, j) => `<button class="photo-thumb" onclick="viewIssuePhoto(${k},${j})" aria-label="Schadensfoto ${j + 1} vergrößern"><img src="${p.data}" alt="Schadensfoto ${j + 1}"></button>`).join("")}</div>${x.workId ? `<span class="badge green">✓ Zusätzliche Arbeit erfasst</span>` : `<button class="small" onclick="workFromIssue(${k})">＋ Arbeit aus diesem Mangel</button>`}<details class="classification"><summary>Einstufung ändern</summary><label class="small">Bedeutung für den Flugbetrieb<select aria-label="Einstufung des Mangels ändern" onchange="updateImpact(${k},this.value)">${impactOptions(level)}</select></label><span class="small muted">Demo-Einstufung</span></details></div>`;
-}
-function updateImpact(k, value) {
-  if (!Object.hasOwn(impactLabels, value)) return;
-  const x = issues(selected)[k],
-    old = x.impact;
-  x.impact = value;
-  if (!save()) {
-    x.impact = old;
-    return;
-  }
-  drawDaily();
-  render();
-  toast("Einstufung gespeichert");
+  return `<div class="issue issue-${level}"><strong>${impactLabels[level]} · ${esc(x.date)}</strong><div class="issue-tags"><span class="badge">${esc(x.category || "Nicht klassifiziert")}</span><span class="badge">${esc(x.priority || "Bewertung erforderlich")}</span></div>${x.location ? `<div class="small"><b>Position:</b> ${esc(x.location)}</div>` : ""}<p>${esc(x.text)}</p><div class="issue-photos">${(x.photos || []).map((p, j) => `<button class="photo-thumb" onclick="viewIssuePhoto(${k},${j})" aria-label="Schadensfoto ${j + 1} vergrößern"><img src="${p.data}" alt="Schadensfoto ${j + 1}"></button>`).join("")}</div>${x.workId ? `<span class="badge green">✓ Zusätzliche Arbeit erfasst</span>` : `<button class="small" onclick="workFromIssue(${k})">＋ Arbeit aus diesem Mangel</button>`}<div class="issue-actions"><button onclick="openIssueEdit(${k})">Bearbeiten</button><button onclick="openIssueEdit(${k},'close')">Mangel abschließen</button></div>${issueAudit(x)}</div>`;
 }
 function viewIssuePhoto(k, j) {
   const x = issues(selected)[k],
