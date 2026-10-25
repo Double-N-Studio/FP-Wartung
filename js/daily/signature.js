@@ -38,7 +38,7 @@ function signRecord() {
     return;
   }
   const r = record(selected);
-  if (r.checks.filter(Boolean).length !== 24) return;
+  if (!dailyComplete(selected)) return;
   const signed = {
     name,
     time: new Intl.DateTimeFormat("de-DE", {
@@ -51,7 +51,7 @@ function signRecord() {
   r.signed = signed;
   state.archive.push({
     aircraft: DATA.fleet[selected].name,
-    revision: "1.0 / 25.05.2020",
+    revision: dailyChecklist(selected).revision,
     ...JSON.parse(JSON.stringify(r)),
   });
   if (save()) {

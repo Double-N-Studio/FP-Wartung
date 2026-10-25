@@ -180,7 +180,7 @@ const DATA = {
   fleet: [
     {
       name: "ASK 21 B",
-      reg: "Kennzeichen ergänzen",
+      reg: "D-7209",
       img: "assets/images/fleet/plane-0.jpg",
     },
     {

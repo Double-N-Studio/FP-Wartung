@@ -12,7 +12,7 @@ Flugbetrieb, Planung der Winterwartung und Arbeiten im laufenden Jahr – für d
 **Flugbetrieb**
 
 - Flottenübersicht mit Status pro Flugzeug: `KLAR`, `CHECK OFFEN`, `UNKLAR`; Filter und Suche
-- Tageskontrolle in drei Schritten: Mängelübersicht → Checkliste (24 Punkte) → Bestätigung mit
+- Tageskontrolle in drei Schritten: Mängelübersicht → Checkliste (ASK 21 B: 26 Punkte, LS4a: 24 Punkte) → Bestätigung mit
   Unterschrift (Finger/Stift) und Demo-PIN
 - Mängelmeldungen mit Einstufung (sperrend / Pilotenhinweis / kosmetisch), Kategorie, Position und bis zu
   vier komprimierten Fotos
@@ -66,13 +66,15 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
 │   ├── annual-work.css      Arbeiten im laufenden Jahr
 │   └── weekend.css          Wochenendübersicht
 ├── js/
-│   ├── data.js              Flotte und Checklisten (aus den LS4a-Vorlagen übernommen)
+│   ├── data.js              Flotte, LS4a-Tageskontrolle und Wintercheckliste
 │   ├── core/
 │   │   ├── utils.js         DOM-, Datums- und Formatierungshilfen, Toast
 │   │   ├── state.js         LocalStorage-Zustand, Export, Reset
 │   │   ├── ui-state.js      Flüchtiger UI-Zustand (Ansicht, Filter, Auswahl)
 │   │   └── dialog.js        Gemeinsamer Detaildialog
 │   ├── daily/               Flugbetrieb
+│   │   ├── checklists/ask21b.js  ASK-21B-Tageskontrolle aus dem Original-PDF
+│   │   ├── checklists.js     Zuordnung, Dokumente und Anzahl der Prüfpunkte
 │   │   ├── status.js        Statuslogik pro Flugzeug
 │   │   ├── fleet-overview.js
 │   │   ├── daily-check.js   Ablauf der Tageskontrolle
@@ -93,7 +95,7 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
 └── assets/
     ├── images/fleet/        Vereinsfotos der Flugzeuge (plane-0 … plane-7)
     ├── icons/               App-Icons
-    └── docs/                Original-LS4a-Vorlagen (Tageskontrolle PDF, Winterwartung DOCX)
+    └── docs/                Originalvorlagen (Tageskontrollen PDF, Winterwartung DOCX)
 ```
 
 ### Architektur-Hinweise
@@ -111,9 +113,28 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
 
 ### Daten anpassen
 
-Flotte, Tagescheckliste und Winteraufgaben stehen in [`js/data.js`](js/data.js). Bisher sind nur für
-die **LS 4 a** (D-5104) Originalchecklisten hinterlegt; bei den übrigen Flugzeugen fehlen Checklisten
-und Kennzeichen.
+Flotte, LS4a-Tagescheckliste und Winteraufgaben stehen in [`js/data.js`](js/data.js).
+Die Tageskontrolle der **ASK 21 B (D-7209)** steht separat in
+[`js/daily/checklists/ask21b.js`](js/daily/checklists/ask21b.js). Die Zuordnung zu Flugzeugen,
+Originaldokumenten und Revisionen erfolgt in [`js/daily/checklists.js`](js/daily/checklists.js).
+Die Anzahl der Prüfpunkte wird daraus für Fortschrittsanzeige und Abschlussprüfung berechnet.
+
+- ASK 21 B: 26 Prüfpunkte (15 Außen-Check, 7 Cockpit von außen, 4 Cockpit von innen),
+  Rev. 1.0 vom 25.05.2020; Quelle: [`assets/docs/daily-ask21b.pdf`](assets/docs/daily-ask21b.pdf).
+  Die beiden PDF-Seiten enthalten dieselbe Checkliste, die nur einmal übernommen wurde.
+- LS 4 a (D-5104): 24 Prüfpunkte; bestehende Inhalte und gespeicherte Eingaben bleiben erhalten.
+- Winter-Originalcheckliste weiterhin nur für die LS4a vorhanden.
+
+### Prüfungen
+
+Mit Node.js (ohne zusätzliche Pakete):
+
+```bash
+node --test tests/daily-checklists.test.cjs
+```
+
+Geprüft werden Checklisten-Zuordnung, Prüfpunkte, Abschlussprüfung, Dokumentlinks und
+die bestehende LS4a-Kontrolle. Eine manuelle Prüfung im Browser ergänzt diese Logiktests.
 
 ### Formatierung
 
@@ -125,7 +146,7 @@ npx prettier --write "js/**/*.js" "css/*.css"
 
 - Daten nur lokal im jeweiligen Browser – keine gemeinsame Datenbank, kein Abgleich zwischen Geräten
 - Feste Demo-PIN statt Benutzerverwaltung
-- Checklisten nur für die LS4a
+- Tageschecklisten für ASK 21 B und LS4a; Wintercheckliste nur für LS4a
 - Kein Offlinebetrieb (kein Service Worker)
 
 ## Geplante Integration
