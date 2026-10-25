@@ -21,11 +21,7 @@ function app() {
     'js/data.js', 'js/core/utils.js', 'js/core/state.js', 'js/core/ui-state.js',
     'js/daily/checklists/ask21b.js', 'js/daily/checklists.js',
     'js/daily/status.js', 'js/daily/daily-check.js', 'js/daily/issues.js',
-feature/kontrollprotokolle-anzeigen
-    'js/daily/signature.js', 'js/daily/protocols.js',
-=======
-    'js/daily/signature.js', 'js/daily/issue-lifecycle.js',
- main
+    'js/daily/issue-lifecycle.js', 'js/daily/signature.js', 'js/daily/protocols.js',
   ]) vm.runInContext(fs.readFileSync(path.join(__dirname, '..', file), 'utf8'), context);
   vm.runInContext('function closeDialog() {}', context);
   return { run: (code) => vm.runInContext(code, context), elements };
