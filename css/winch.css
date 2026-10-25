@@ -1,0 +1,4 @@
+.winch-card { display: grid; grid-template-columns: minmax(180px, 300px) 1fr; gap: 24px; padding: 20px; background: white; border: 1px solid #d8e2dd; border-radius: 16px; }
+.winch-card > img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; }
+#equipment { margin: 30px 0; }
+@media (max-width: 600px) { .winch-card { grid-template-columns: 1fr; } }

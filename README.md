@@ -20,6 +20,16 @@ Flugbetrieb, Planung der Winterwartung und Arbeiten im laufenden Jahr – für d
   ursprüngliche Angaben und Änderungen bleiben im Verlauf erhalten
 - Sperrende Mängel setzen das Flugzeug automatisch auf `UNKLAR`
 
+**ACL-Winde**
+
+- Separate Gerätekarte mit Vereinsfoto; gehört nicht zur Flugzeugflotte oder Winterplanung
+- Gemeinsame Mängelverwaltung einschließlich Fotos, Bearbeiten, Abschluss und Verlauf
+- Tagesprotokoll und Ablauf für Dienstbeginn in `js/winch/`; Prüfpunkte separat unter
+  `js/winch/checklists/start.js`
+- **Vereinsvorlage für Dienstbeginn fehlt noch:** keine erfundenen Prüfpunkte;
+  Bestätigung bleibt gesperrt, bis Revision, Originalquelle und Prüfpunkte hinterlegt sind
+- Fotoquelle: <https://ac-langenselbold.de/flugzeuge/> (Winde, Vereinsfoto)
+
 **Winterwartung**
 
 - Gantt-Plan für sieben Segelflugzeuge (ohne Dynamic WT9), Reihenfolge per Drag-and-drop oder ↑/↓
@@ -113,6 +123,15 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
   gespeichert – das LocalStorage-Limit (≈ 5 MB) ist schnell erreicht.
 - **CSS-Reihenfolge**: Die Stylesheets überschreiben teilweise frühere Regeln; die Reihenfolge der
   `<link>`-Tags nicht ändern, ohne das Ergebnis zu prüfen.
+
+### Windenbetrieb erweitern
+
+Die Winde liegt unter `DATA.winch`, ihr Mängelschlüssel ist `winch`.
+Tagesprotokolle werden unter `state.winch.days[Datum]` gespeichert. So bleiben die acht
+Flugzeuge, ihre bisherigen Indizes, Winterreihenfolge und Jahreswachspflichten unverändert.
+Winden-Prüfpunkte werden ausschließlich aus der konkreten Vereinsvorlage in das getrennte
+Checklistenmodul übernommen. Ohne Vorlage kann kein Dienstbeginn bestätigt werden.
+Ein neuer Tag erhält ein eigenes Protokoll; alte Mängel bleiben offen, bis sie beendet werden.
 
 ### Daten anpassen
 

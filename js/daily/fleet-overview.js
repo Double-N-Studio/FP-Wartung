@@ -14,8 +14,9 @@ function renderDaily() {
       )
       .join(
         "",
-      )}<input aria-label="Flugzeug suchen" placeholder="Flugzeug suchen …" value="${esc(query)}" oninput="query=this.value;renderCards()"></div><div class="grid fleet-grid" id="cards"></div><p class="overview-note">KLAR = heutige Kontrolle unterschrieben, keine sperrenden Mängel in der Demo. CHECK OFFEN = noch nicht bestätigt. UNKLAR = sperrender oder noch nicht bewerteter Mangel. <a href="#annualWork">↓ Arbeiten im laufenden Jahr</a></p></section><section id="annualWork" aria-label="Arbeiten im laufenden Jahr"></section>`;
+      )}<input aria-label="Flugzeug suchen" placeholder="Flugzeug suchen …" value="${esc(query)}" oninput="query=this.value;renderCards()"></div><div class="grid fleet-grid" id="cards"></div><p class="overview-note">KLAR = heutige Kontrolle unterschrieben, keine sperrenden Mängel in der Demo. CHECK OFFEN = noch nicht bestätigt. UNKLAR = sperrender oder noch nicht bewerteter Mangel. <a href="#annualWork">↓ Arbeiten im laufenden Jahr</a></p></section><section id="equipment" aria-label="Bodengeräte"></section><section id="annualWork" aria-label="Arbeiten im laufenden Jahr"></section>`;
   renderCards();
+  renderWinchOverview();
   renderAnnualWork();
 }
 function renderCards() {
