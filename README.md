@@ -16,6 +16,8 @@ Flugbetrieb, Planung der Winterwartung und Arbeiten im laufenden Jahr – für d
   Unterschrift (Finger/Stift) und Demo-PIN
 - Mängelmeldungen mit Einstufung (sperrend / Pilotenhinweis / kosmetisch), Kategorie, Position und bis zu
   vier komprimierten Fotos
+- Mängel bearbeiten, mit Name und Behebungsvermerk abschließen und mit Begründung wieder öffnen;
+  ursprüngliche Angaben und Änderungen bleiben im Verlauf erhalten
 - Sperrende Mängel setzen das Flugzeug automatisch auf `UNKLAR`
 
 **Winterwartung**
@@ -79,6 +81,7 @@ Demo-PIN für alle Bestätigungen: **1234** (nur Ablaufdemo, keine Authentifizie
 │   │   ├── fleet-overview.js
 │   │   ├── daily-check.js   Ablauf der Tageskontrolle
 │   │   ├── issues.js        Mängelmeldungen und Fotos
+│   │   ├── issue-lifecycle.js Bearbeitung, Abschluss und Änderungsverlauf
 │   │   └── signature.js     Unterschrift und Abschluss
 │   ├── work/                Arbeitsmodell (Winter- und Jahresarbeiten)
 │   │   ├── work-items.js    Aufgaben, Fortschritt, eigene Arbeiten
@@ -130,7 +133,7 @@ Die Anzahl der Prüfpunkte wird daraus für Fortschrittsanzeige und Abschlusspr�
 Mit Node.js (ohne zusätzliche Pakete):
 
 ```bash
-node --test tests/daily-checklists.test.cjs
+node --test tests/*.test.cjs
 ```
 
 Geprüft werden Checklisten-Zuordnung, Prüfpunkte, Abschlussprüfung, Dokumentlinks und

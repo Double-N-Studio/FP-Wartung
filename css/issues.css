@@ -43,3 +43,8 @@
 #photoView {
   width: min(1100px, 96vw);
 }
+
+.issue-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.closed-issues, .issue-history { margin: 16px 0; }
+.issue-history > div { border-top: 1px solid #d8e2dd; padding: 10px 0; }
+#issueEditDialog { width: min(780px, 96vw); }
