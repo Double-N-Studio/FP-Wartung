@@ -1,7 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const app = require('./helpers/app.cjs');
-const files = ['js/winch/data.js', 'js/winch/checklists/start.js', 'js/winch/model.js', 'js/winch/view.js', 'js/winter/planning.js'];
+const files = ['js/winch/data.js', 'js/winch/checklists/start.js', 'js/winch/checklists/end.js', 'js/winch/launches.js', 'js/winch/model.js', 'js/winch/view.js', 'js/winter/planning.js'];
 
 test('winch is separate from aircraft, winter planning and daily checklists', () => {
   const { run } = app(files);
